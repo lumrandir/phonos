@@ -5,13 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "phonos"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "eveeel@gmail.com"
-    gem.homepage = "http://github.com/eveel/phonos"
-    gem.authors = ["Dmitry A. Ustalov"]
+    gem.summary = 'Phonos Phonosemantics Gem'
+    gem.description = 'Phonos, the Phonosemantics Analyser'
+    gem.email = "lumrandir@gmail.com"
+    gem.homepage = "http://feeltoday.ru/"
+    gem.authors = ["Lumren Randir"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
