@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Lumren Randir"]
-  s.date = %q{2010-03-10}
+  s.date = %q{2010-03-16}
   s.description = %q{Phonos, the Phonosemantics Analyser}
   s.email = %q{lumrandir@gmail.com}
   s.extra_rdoc_files = [
@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/phonos.rb",
+     "lib/phonos/main.rb",
+     "phonos.gemspec",
      "test/helper.rb",
      "test/test_phonos.rb"
   ]
@@ -33,8 +35,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Phonos Phonosemantics Gem}
   s.test_files = [
-    "test/test_phonos.rb",
-     "test/helper.rb"
+    "test/helper.rb",
+     "test/test_phonos.rb"
   ]
 
   if s.respond_to? :specification_version then
