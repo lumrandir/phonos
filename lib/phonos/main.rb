@@ -78,10 +78,11 @@ module Phonos
   
   class Analyzer
     include Singleton
-    def analyse text
+    def prepare text
       # обрезаем, приводим в нижний регистр, отсекаем нахер лишние символы
       # и выделяем верхним регистром мягкие согласные
-      text.mb_chars.strip.downcase.gsub /[^a-z\s]/, ""
+      text.mb_chars.strip.downcase.gsub(/[^а-я\s]/, "").gsub(
+        /[бвгджзклмнпрстфхцчшщ][еёиьюя]/) { |match| match.mb_chars.capitalize }
     end
   end
 end
