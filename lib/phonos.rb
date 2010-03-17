@@ -2,4 +2,5 @@
 
 module Phonos
   require 'phonos/main'
+  require 'phonos/language'
 end

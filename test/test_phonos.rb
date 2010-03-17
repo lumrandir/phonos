@@ -1,13 +1,11 @@
 #encoding: utf-8
 
-require 'rubygems'
-require 'shoulda'
-require 'lib/phonos'
+require 'test/helper'
 
 class TestPhonos < Test::Unit::TestCase
-  context "Unprepared string" do
+  context "String filtrator" do
     setup do
-      @phonos = Phonos::Analyzer.instance
+      @phonos = TestAnalyzer.instance
     end
 
     should "return prepared string" do
