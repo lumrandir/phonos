@@ -21,9 +21,13 @@ module Phonos
   class Analyzer
     include Singleton
 
+    def initialize
+      @base = Phonos::Language::RUSSIAN
+    end
+
     def analyse text
       @text = prepare text.mb_chars
-      process(@text, count(@text))
+      process(@text.delete(' '), count(@text))
     end
 
     def prepare text
@@ -59,28 +63,30 @@ module Phonos
       @result = {}
       @f1 = {}
       @f2 = {}
-      @base = Phonos::Language::RUSSIAN
+      # и запомните, мои маленькие дэткорщики,- главное - ЕБАШИЛОВО!
       text.each_char do |c|
         SCALES.each do |scale|
-          if counts[' '][:abs] <= 4
-            if counts[c][:abs] / counts[:total] <= 0.368
-              @meat = (counts[c][:rel] / counts[c][:abs]) * (
-                ((counts[c][:abs] / counts[:total]) * Math.log(counts[c][:abs] / counts[:total])) /
-                  @base[c][:frequency] * Math.log(@base[c][:frequency]))
-            else
-              @meat = (counts[c][:rel] / counts[c][:abs]) * (
-                ((counts[c][:abs] / counts[:total]) * Math.log(counts[c][:abs] / counts[:total])) /
-                  @base[c][:frequency] * Math.log(@base[c][:frequency]))
-            end
-              @f1[scale] ||= 0
-              @f1[scale] += @base[c][scale] * @meat
-              @f2[scale] ||= 0
-              @f2[scale] += @meat
-            
+          @f1[scale] ||= 0
+          @f2[scale] ||= 0
+          if counts[:space] <= 4 && counts[c][:abs] / counts[:total] > 0.368
+            @f1[scale] += (@base[c][scale] * counts[c][:rel] / counts[c][:abs] * (-0.368)) /
+              (@base[c][:frequency] * Math.log(@base[c][:frequency]))
+            @f2[scale] += (counts[c][:rel] / counts[c][:abs] * (-0.368)) /
+              (@base[c][:frequency] * Math.log(@base[c][:frequency]))
           else
+            @f1[scale] += (@base[c][scale] * counts[c][:rel] / counts[:total] *
+              Math.log(counts[c][:abs] / counts[:total])) / (@base[c][:frequency] *
+              Math.log(@base[c][:frequency]))
+            @f2[scale] += (counts[c][:rel] / counts[:total] *
+              Math.log(counts[c][:abs] / counts[:total])) / (@base[c][:frequency] *
+              Math.log(@base[c][:frequency]))
           end
         end
       end
+      SCALES.each do |scale|
+        @result[scale] = 3 - @f1[scale] / @f2[scale]
+      end
+      @result
     end
     private :process
     
