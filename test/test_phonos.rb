@@ -22,7 +22,7 @@ class TestPhonos < Test::Unit::TestCase
             'к' => { :abs => 1, :rel => 1 }, 'Д' => { :abs => 1, :rel => 3 },
             'е' => { :abs => 1, :rel => 1 }, 'Б' => { :abs => 1, :rel => 1 },
             'и' => { :abs => 1, :rel => 1 }, 'л' => { :abs => 1, :rel => 1 },
-            ' ' => { :abs => 2, :rel => 2 }, :total => 13
+            :space => 2, :total => 13
           }, @phonos.count("буба сука ДеБил".mb_chars))
       end
     end
