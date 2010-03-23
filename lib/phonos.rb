@@ -8,6 +8,6 @@ rescue LoadError
 end
 
 module Phonos
-  require 'phonos/main'
+  require 'phonos/analyzer'
   require 'phonos/language'
 end
