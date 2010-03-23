@@ -1,17 +1,12 @@
-#encoding: utf-8
+# encoding: utf-8
+$KCODE = 'u'
 
 require 'rubygems'
 require 'shoulda'
-require 'lib/phonos'
-require 'active_support/core_ext'
 
-class TestAnalyzer < Phonos::Analyzer
-  def prepare text
-    super text
-  end
+$: << 'lib'
+require 'phonos'
 
-  def count text
-    super text
-  end
+class Phonos::Analyzer
   public :prepare, :count
 end
