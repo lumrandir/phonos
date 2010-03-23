@@ -8,7 +8,10 @@ rescue LoadError
   require 'rubygems'
   retry
 end
-
+=begin rdoc
+Simple phonosemantic analyzer. All rights reserved by Liebermann Inc. and
+Sinagoga Ltd.
+=end
 module Phonos
   require 'singleton'
 
@@ -18,13 +21,36 @@ module Phonos
     :glad, :loud, :long, :brave, :kind, :mighty, :mobile
   ]
 
+=begin rdoc
+It's only useful element of this module. Initialization is simple:
+
+@phonos = Phonos::Analyzer.instance
+
+There is no optional parameters, cool features and so on.
+And remember to write:
+
+require 'phonos'
+=end
   class Analyzer
     include Singleton
-
     def initialize
       @base = Phonos::Language::RUSSIAN
     end
 
+=begin rdoc
+It's only public method of Phonos::Analyzer class. It takes _text_ of (+String+)
+and returns +Hash+ of phonosemantic scales for this text. For now is it able to work
+only with russian text. All the "left" symbols (including latin alphabet symbols) will
+be cutted.
+
+Values of hash are in range from 2 to -2, and this boundary values match maximal
+positive and maximal negative value of each scale respectively.
+
+Scale-keys:
+  :good, :big, :gentle, :feminine, :light, :active, :simple, :strong, :hot, :fast,
+  :beautiful, :smooth, :easy, :gay, :safe, :majestic, :bright, :rounded, :glad,
+  :loud, :long, :brave, :kind, :mighty, :mobile
+=end
     def analyse text
       @text = prepare text.mb_chars
       process(@text.delete(' '), count(@text))
