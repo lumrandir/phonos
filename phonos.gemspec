@@ -36,8 +36,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Phonos Phonosemantics Gem}
   s.test_files = [
-    "test/test_phonos.rb",
-     "test/helper.rb"
+    "test/helper.rb",
+     "test/test_phonos.rb"
   ]
 
   if s.respond_to? :specification_version then
