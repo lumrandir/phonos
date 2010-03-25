@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 begin
-  require 'active_support/core_ext'
+  require 'unicode_utils'
 rescue LoadError
   require 'rubygems'
   retry

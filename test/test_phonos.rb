@@ -8,8 +8,8 @@ class TestPhonos < Test::Unit::TestCase
 
     context "String filtrator" do
       should "return prepared string" do
-        assert_equal "буба сука ДеБил".mb_chars,
-          subject.prepare("  БуБа   сука@    ^дебиЛ ".mb_chars)
+        assert_equal "буба сука ДеБил",
+          subject.prepare("  БуБа   сука@    ^дебиЛ ")
       end
     end
 
@@ -22,7 +22,7 @@ class TestPhonos < Test::Unit::TestCase
           'е' => { :abs => 1, :rel => 1 }, 'Б' => { :abs => 1, :rel => 1 },
           'и' => { :abs => 1, :rel => 1 }, 'л' => { :abs => 1, :rel => 1 },
           :space => 2, :total => 13 },
-          subject.count("буба сука ДеБил".mb_chars))
+          subject.count("буба сука ДеБил"))
       end
     end
   end

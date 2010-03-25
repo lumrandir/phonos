@@ -1,5 +1,4 @@
 # encoding: utf-8
-$KCODE = 'u'
 
 require 'rubygems'
 require 'shoulda'
