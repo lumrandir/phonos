@@ -10,7 +10,8 @@ begin
     gem.email = "lumrandir@gmail.com"
     gem.homepage = "http://feeltoday.ru/"
     gem.authors = ["Lumren Randir"]
-    gem.add_development_dependency "shoulda", ">= 0"
+    gem.add_development_dependency "shoulda", ">= 2.10.3"
+    gem.add_dependency "unicode", ">= 0.3.1"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

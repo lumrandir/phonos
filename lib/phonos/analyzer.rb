@@ -8,7 +8,6 @@
 module Phonos
   require 'singleton'
   require 'mathn'
-  require 'unicode'
 
   SCALES = [
     :good, :big, :gentle, :feminine, :light, :active, :simple, :strong, :hot,
@@ -52,7 +51,7 @@ Scale-keys:
       f1 = {}
       f2 = {}
       # и запомните, мои маленькие дэткорщики,- главное - ЕБАШИЛОВО!
-      prepare(text.mb_chars).delete(' ').each_char do |c|
+      prepare(text).delete(' ').each_char do |c|
         char = counts[c]
         SCALES.each do |scale|
           f1[scale] ||= 0
@@ -85,7 +84,7 @@ Scale-keys:
         gsub(/[^а-я\s]/, "").
         gsub(/[бвгджзклмнпрстфхцчшщ][еёиьюя]/) do |match|
           Unicode::capitalize(match)
-        end.gsub(/\s{2,}/, " ")
+        end.gsub(/\s+/, " ")
     end
     private :prepare
 
@@ -93,15 +92,16 @@ Scale-keys:
       counts = {}
       # ищем число вхождений для каждого символа
       text.split(' ').each do |word|
-        word.each_char do |char|
+        chars = StringCrutch.chars(word)
+        chars.each do |char|
           counts[char] ||= {}
-          counts[char][:abs] ||= text.count char
+          counts[char][:abs] ||= StringCrutch.count(text, char)
           counts[char][:rel] = counts[char][:abs]
         end
-        counts[word[0]][:rel] += 2
+        counts[chars.first][:rel] += 2
       end
-      counts[:space] = text.count ' '
-      counts[:total] = text.size - counts[:space]
+      counts[:space] = StringCrutch.count(text, ' ')
+      counts[:total] = StringCrutch.size(text) - counts[:space]
       counts
     end
     private :count

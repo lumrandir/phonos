@@ -1,7 +1,9 @@
 # encoding: utf-8
 
+require 'string_crutch'
+
 begin
-  require 'unicode_utils'
+  require 'unicode'
 rescue LoadError
   require 'rubygems'
   retry
