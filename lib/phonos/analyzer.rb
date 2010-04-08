@@ -56,18 +56,20 @@ Scale-keys:
         SCALES.each do |scale|
           f1[scale] ||= 0
           f2[scale] ||= 0
-          if counts[:space] <= 4 && char[:abs] / counts[:total] > 0.368
-            f1[scale] += (@lang[c][scale] * char[:rel] / char[:abs] * (-0.368)) /
-              (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
-            f2[scale] += (char[:rel] / char[:abs] * (-0.368)) /
-              (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
-          else
-            f1[scale] += (@lang[c][scale] * char[:rel] / counts[:total] *
-              Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
-              Math.log(@lang[c][:frequency]))
-            f2[scale] += (char[:rel] / counts[:total] *
-              Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
-              Math.log(@lang[c][:frequency]))
+          if @lang[c]
+            if counts[:space] <= 4 && char[:abs] / counts[:total] > 0.368
+              f1[scale] += (@lang[c][scale] * char[:rel] / char[:abs] * (-0.368)) /
+                (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
+              f2[scale] += (char[:rel] / char[:abs] * (-0.368)) /
+                (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
+            else
+              f1[scale] += (@lang[c][scale] * char[:rel] / counts[:total] *
+                Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
+                Math.log(@lang[c][:frequency]))
+              f2[scale] += (char[:rel] / counts[:total] *
+                Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
+                Math.log(@lang[c][:frequency]))
+            end
           end
         end
       end
@@ -83,8 +85,8 @@ Scale-keys:
       Unicode::downcase(text).strip.
         gsub(/[^а-я\s]/, "").
         gsub(/[бвгджзклмнпрстфхцчшщ][еёиьюя]/) do |match|
-          Unicode::capitalize(match)
-        end.gsub(/\s+/, " ")
+        Unicode::capitalize(match)
+      end.gsub(/\s+/, " ")
     end
     private :prepare
 
