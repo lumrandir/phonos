@@ -1,4 +1,4 @@
-#encoding: utf-8
+# encoding: utf-8
 
 module Phonos::Language
   RUSSIAN = {
@@ -63,5 +63,21 @@ module Phonos::Language
     "Щ" => { :good => 3.5, :big => 3.8, :gentle => 2.7, :feminine => 2.5, :light => 3.8, :active => 4.0, :simple => 4.0, :strong => 4.2, :hot => 1.8, :fast => 3.8, :beautiful => 3.7, :smooth => 4.4, :easy => 3.4, :gay => 3.4, :safe => 4.3, :majestic => 4.4, :bright => 3.9, :rounded => 3.6, :glad => 4.2, :loud => 4.0, :long => 2.7, :brave => 4.1, :kind => 3.3, :mighty => 4.0, :mobile => 3.5, :frequency => 0.003 },
     "о" => { :good => 1.6, :big => 1.3, :gentle => 3.2, :feminine => 3.7, :light => 2.2, :active => 2.2, :simple => 1.2, :strong => 1.7, :hot => 3.7, :fast => 3.6, :beautiful => 1.9, :smooth => 1.5, :easy => 2.5, :gay => 2.9, :safe => 2.8, :majestic => 1.6, :bright => 1.8, :rounded => 1.4, :glad => 2.7, :loud => 1.4, :long => 1.7, :brave => 1.8, :kind => 2.7, :mighty => 1.7, :mobile => 2.7, :frequency => 0.067 },
     "О" => { :good => 1.6, :big => 1.3, :gentle => 3.2, :feminine => 3.7, :light => 2.2, :active => 2.2, :simple => 1.2, :strong => 1.7, :hot => 3.7, :fast => 3.6, :beautiful => 1.9, :smooth => 1.5, :easy => 2.5, :gay => 2.9, :safe => 2.8, :majestic => 1.6, :bright => 1.8, :rounded => 1.4, :glad => 2.7, :loud => 1.4, :long => 1.7, :brave => 1.8, :kind => 2.7, :mighty => 1.7, :mobile => 2.7, :frequency => 0.037 },
+  }
+
+  ANTONYMES = {
+    :good => ['хороший', 'плохой'], :big => ['большой', 'маленький'],
+    :gentle => ['нежный', 'грубый'], :feminine => ['женственный', 'мужественный'],
+    :light => ['светлый', 'тёмный'], :active => ['активный', 'пассивный'],
+    :simple => ['простой', 'сложный'], :strong => ['сильный', 'слабый'],
+    :hot => ['горячий', 'холодный'], :fast => ['быстрый', 'медленный'],
+    :beautiful => ['красивый', 'отталкивающий'], :smooth => ['гладкий', 'шероховатый'],
+    :easy => ['лёгкий', 'тяжёлый'], :gay => ['весёлый', 'грустный'],
+    :safe => ['безопасный', 'страшный'], :majestic => ['величественный', 'низменный'],
+    :bright => ['яркий', 'тусклый'], :rounded => ['округлый', 'угловатый'],
+    :glad => ['радостный', 'печальный'], :loud => ['громкий', 'тихий'],
+    :long => ['длинный', 'короткий'], :brave => ['храбрый', 'трусливый'],
+    :kind => ['добрый', 'злой'], :mighty => ['могучий', 'хилый'],
+    :mobile => ['подвижный', 'медлительный']
   }
 end
