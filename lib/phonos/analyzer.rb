@@ -74,7 +74,12 @@ Scale-keys:
         end
       end
       SCALES.inject({}) do |r, scale|
-        r[scale] = 3.0 - f1[scale] / f2[scale]
+        val = if f1[scale] && f2[scale]
+          f1[scale] / f2[scale]
+        else
+          1.0
+        end
+        r[scale] = 3.0 - val
         r
       end
     end
