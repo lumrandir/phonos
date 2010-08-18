@@ -7,5 +7,5 @@ $: << 'lib'
 require 'phonos'
 
 class Phonos::Analyzer
-  public :prepare, :count
+  public :prepare, :detect, :filter, :get_stats
 end
