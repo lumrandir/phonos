@@ -1,9 +1,8 @@
 # encoding: utf-8
 
-require 'lib/string_crutch'
+require 'string_crutch'
 
 begin
-  require 'unicode'
   require 'active_support/all'
   require 'yaml'
 rescue LoadError
@@ -12,6 +11,6 @@ rescue LoadError
 end
 
 module Phonos
-  require 'lib/phonos/analyzer'
-  require 'lib/phonos/language'
+  require 'phonos/analyzer'
+  require 'phonos/language'
 end
