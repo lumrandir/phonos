@@ -70,7 +70,8 @@ module Phonos
       data.each do |lang, words|
         string = words.join ' '
         stats[lang] ||= {}
-        stats[:space] ||= stats[:total] ||= 0
+        stats[:space] ||= 0
+        stats[:total] ||= 0
         stats[:space] += StringCrutch.count(string, ' ')
         stats[:total] += string.mb_chars.size - stats[:space]
         words.each do |word|
@@ -87,70 +88,49 @@ module Phonos
     end
     private :get_stats
 
-    #    def analyse raw_text
-    #      text = prepare raw_text
-    #      counts = count(text)
-    #      f1 = {}
-    #      f2 = {}
-    #      # и запомните, мои маленькие дэткорщики,- главное - ЕБАШИЛОВО!
-    #      prepare(text).delete(' ').each_char do |c|
-    #        char = counts[c]
-    #        SCALES.each do |scale|
-    #          f1[scale] ||= 0
-    #          f2[scale] ||= 0
-    #          if @lang[c]
-    #            if counts[:space] <= 4 && char[:abs] / counts[:total] > 0.368
-    #              f1[scale] += (@lang[c][scale] * char[:rel] / char[:abs] * (-0.368)) /
-    #                (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
-    #              f2[scale] += (char[:rel] / char[:abs] * (-0.368)) /
-    #                (@lang[c][:frequency] * Math.log(@lang[c][:frequency]))
-    #            else
-    #              f1[scale] += (@lang[c][scale] * char[:rel] / counts[:total] *
-    #                Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
-    #                Math.log(@lang[c][:frequency]))
-    #              f2[scale] += (char[:rel] / counts[:total] *
-    #                Math.log(char[:abs] / counts[:total])) / (@lang[c][:frequency] *
-    #                Math.log(@lang[c][:frequency]))
-    #            end
-    #          end
-    #        end
-    #      end
-    #      SCALES.inject({}) do |r, scale|
-    #        val = if f1[scale] && f2[scale]
-    #          f1[scale] / f2[scale]
-    #        else
-    #          1.0
-    #        end
-    #        r[scale] = 3.0 - val
-    #        r
-    #      end
-    #    end
-    #
-    #    def prepare text
-    #      Unicode::downcase(text).strip.
-    #        gsub(/[^а-яa-z\s]/, "").
-    #        gsub(/[бвгджзклмнпрстфхцчшщ][еёиьюя]/) do |match|
-    #        Unicode::capitalize(match)
-    #      end.gsub(/\s+/, " ")
-    #    end
-    #    private :prepare
-    #
-    #    def count text
-    #      counts = {}
-    #      # ищем число вхождений для каждого символа
-    #      text.split(' ').each do |word|
-    #        chars = StringCrutch.chars(word)
-    #        chars.each do |char|
-    #          counts[char] ||= {}
-    #          counts[char][:abs] ||= StringCrutch.count(text, char)
-    #          counts[char][:rel] = counts[char][:abs]
-    #        end
-    #        counts[chars.first][:rel] += 2
-    #      end
-    #      counts[:space] = StringCrutch.count(text, ' ')
-    #      counts[:total] = StringCrutch.size(text) - counts[:space]
-    #      counts
-    #    end
-    #    private :count
+    def calculate data, stats
+      f1 = {}
+      f2 = {}
+      data.each do |lang, words|
+        table = @cache.read "#{lang}_phonos"
+        unless table
+          table = YAML.load_file "./share/#{lang}.yaml"
+          @cache.write "#{lang}_phonos", table
+        end
+        words.join('').each_char do |c|
+          char = stats[lang][c]
+          SCALES.each do |scale|
+            f1[scale] ||= 0
+            f2[scale] ||= 0
+            if table[c]
+              if stats[:space] <= 4 && char[:abs] / stats[:total] > 0.368
+                f1[scale] += (table[c][scale] * char[:rel] / char[:abs] * (-0.368)) /
+                  (table[c][:frequency] * Math.log(table[c][:frequency]))
+                f2[scale] += (char[:rel] / char[:abs] * (-0.368)) /
+                  (table[c][:frequency] * Math.log(table[c][:frequency]))
+              else
+                f1[scale] += (table[c][scale] * char[:rel] / stats[:total] *
+                  Math.log(char[:abs] / stats[:total])) / (table[c][:frequency] *
+                  Math.log(table[c][:frequency]))
+                f2[scale] += (char[:rel] / stats[:total] *
+                  Math.log(char[:abs] / stats[:total])) / (table[c][:frequency] *
+                  Math.log(table[c][:frequency]))
+              end
+            end
+          end
+        end
+      end
+      SCALES.inject({}) do |r, scale|
+        p f1, f2
+        val = if f1[scale] && f2[scale]
+          f1[scale] / f2[scale]
+        else
+          1.0
+        end
+        r[scale] = 3.0 - val
+        r
+      end
+    end
+    private :calculate
   end
 end
