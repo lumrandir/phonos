@@ -94,7 +94,7 @@ module Phonos
       data.each do |lang, words|
         table = @cache.read "#{lang}_phonos"
         unless table
-          table = YAML.load_file "./share/#{lang}.yaml"
+          table = YAML.load_file File.expand_path("../../../share/#{lang}.yaml", __FILE__)
           @cache.write "#{lang}_phonos", table
         end
         words.join('').each_char do |c|
@@ -121,7 +121,6 @@ module Phonos
         end
       end
       SCALES.inject({}) do |r, scale|
-        p f1, f2
         val = if f1[scale] && f2[scale]
           f1[scale] / f2[scale]
         else

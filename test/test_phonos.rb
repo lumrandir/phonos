@@ -39,6 +39,12 @@ class TestPhonos < Test::Unit::TestCase
       end
     end
 
+    context '#analyze' do
+      should 'return hash' do
+        assert subject.analyze("буба сука дебил").kind_of? Hash
+      end
+    end
+
     #    context "Counter" do
     #      should "return correct hash" do
     #        assert_equal({
