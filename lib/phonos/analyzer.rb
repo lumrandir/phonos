@@ -36,8 +36,10 @@ module Phonos
       data = {}
       raw_text.mb_chars.downcase.gsub(/@\w+/, '').split.each do |w|
         lang = detect w
-        data[lang] ||= []
-        data[lang] << filter(w, lang)
+        if lang
+          data[lang] ||= []
+          data[lang] << filter(w, lang)
+        end
       end
       data
     end

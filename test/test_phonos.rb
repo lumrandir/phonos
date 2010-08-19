@@ -9,7 +9,7 @@ class TestPhonos < Test::Unit::TestCase
     context '#prepare' do
       should 'return prepared data from raw text' do
         assert_equal({:ru => ["буба", "сука", "ДеБил"]},
-          subject.prepare("  БуБа   сука@    ^дебиЛ "))
+          subject.prepare("  БуБа   сука@  yoba  ^дебиЛ "))
       end
     end
 
@@ -41,21 +41,8 @@ class TestPhonos < Test::Unit::TestCase
 
     context '#analyze' do
       should 'return hash' do
-        assert subject.analyze("буба сука дебил").kind_of? Hash
+        assert subject.analyze("буба сука дебил @yoba СрАнЫй Д0лб0ёб").kind_of? Hash
       end
     end
-
-    #    context "Counter" do
-    #      should "return correct hash" do
-    #        assert_equal({
-    #          'б' => { :abs => 2, :rel => 4 }, 'у' => { :abs => 2, :rel => 2 },
-    #          'а' => { :abs => 2, :rel => 2}, 'с' => { :abs => 1, :rel => 3 },
-    #          'к' => { :abs => 1, :rel => 1 }, 'Д' => { :abs => 1, :rel => 3 },
-    #          'е' => { :abs => 1, :rel => 1 }, 'Б' => { :abs => 1, :rel => 1 },
-    #          'и' => { :abs => 1, :rel => 1 }, 'л' => { :abs => 1, :rel => 1 },
-    #          :space => 2, :total => 13 },
-    #          subject.get_stats("буба сука ДеБил"))
-    #      end
-    #    end
   end
 end
