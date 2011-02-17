@@ -1,6 +1,8 @@
 # encoding: utf-8
 $KCODE='u'
 
+require 'pp'
+
 module Phonos
   require 'mathn'
 
@@ -12,7 +14,7 @@ module Phonos
 
   PATTERNS = {
     :ru => { :detect => /[а-я]/, :select => [
-        [/[^а-я]/, ''],
+        [/[^а-яё]/, ''],
         [/[бвгджзклмнпрстфхцчшщ][еёиьюя]/, Proc.new { |match| match.mb_chars.capitalize }]
       ] }
   }
@@ -96,8 +98,9 @@ module Phonos
       data.each do |lang, words|
         table = @cache.read "#{lang}_phonos"
         unless table
-          table = YAML.load_file File.expand_path("../../../share/#{lang}.yaml", __FILE__)
-          @cache.write "#{lang}_phonos", table
+          table = Phonos::Language::RUSSIAN
+#          table = YAML.load_file File.expand_path("../../../share/#{lang}.yaml", __FILE__)
+#          @cache.write "#{lang}_phonos", table
         end
         words.join('').each_char do |c|
           char = stats[lang][c]
